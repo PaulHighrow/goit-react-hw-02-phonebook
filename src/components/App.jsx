@@ -1,16 +1,55 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
+import { Component } from 'react';
+import { Title } from './Title/Title';
+import { Form } from './Form/Form';
+import { Contacts } from './Contacts/Contacts';
+
+import { nanoid } from 'nanoid';
+
+const INITIAL_STATE = {
+  contacts: [
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ],
+  filter: '',
+  name: '',
+  number: '',
 };
+
+const TITLES = {
+  form: 'Phonebook',
+  contacts: 'Contacts',
+};
+
+export class App extends Component {
+  state = { ...INITIAL_STATE };
+
+  addContact = (name, number) => {
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, { id: nanoid(), name, number }],
+    }));
+    this.reset();
+  };
+
+  deleteContact = (id) => { 
+
+  }
+
+  reset = () => { 
+  
+  }
+
+  render() {
+    const { contacts, name, number, filter } = this.state;
+    return (
+      <>
+        <Title title={TITLES.form} />
+        <Form name={name} number={number} onSubmit={this.addContact} />
+
+        <Title title={TITLES.contacts} />
+        <Contacts contacts={contacts} filter={filter} />
+      </>
+    );
+  }
+}
