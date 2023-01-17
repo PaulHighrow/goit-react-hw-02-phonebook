@@ -1,10 +1,12 @@
+import { Text, Button } from "./Contact.styled";
+
 export const Contact = ({ contact: { id, name, number }, onDelete }) => (
   <>
-    <p>
+    <Text>
       {name}: {number}
-    </p>
-    <button type="button" onClick={() => onDelete(id)}>
+    </Text>
+    <Button type="button" onClick={() => onDelete(id)}>
       Delete
-    </button>
+    </Button>
   </>
 );

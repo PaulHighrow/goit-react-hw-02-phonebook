@@ -1,6 +1,8 @@
+import { Label, Input } from "./Filter.styled";
+
 export const Filter = ({ filter, onFilterInput }) => (
-  <label htmlFor="">
+  <Label htmlFor="">
     Find contacts by name:
-    <input type="text" value={filter} onChange={onFilterInput} />
-  </label>
+    <Input type="text" value={filter} onChange={onFilterInput} />
+  </Label>
 );

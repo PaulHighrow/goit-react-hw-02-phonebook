@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Box } from './Box/Box.styled';
 import { Title } from './Title/Title';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
@@ -46,7 +47,6 @@ export class App extends Component {
   filterContacts = evt => {
     this.setState({ filter: evt.target.value });
   };
- 
 
   render() {
     const { contacts, filter } = this.state;
@@ -54,10 +54,10 @@ export class App extends Component {
     let visibleContacts = contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-  
+
     return (
-      <>
-        <Toaster />
+      <Box>
+        <Toaster position="bottom-center" />
         <Title title={TITLES.form} />
         <ContactForm onSubmit={this.addContact} />
 
@@ -67,7 +67,7 @@ export class App extends Component {
           contacts={visibleContacts}
           onDelete={this.deleteContact}
         />
-      </>
+      </Box>
     );
   }
 }
