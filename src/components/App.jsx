@@ -31,9 +31,9 @@ export class App extends Component {
       return;
     }
     this.setState(prevState => ({
-        contacts: [...prevState.contacts, { id: nanoid(), name, number }],
-      }));
-      toast.success('Contact successfully added!');
+      contacts: [...prevState.contacts, { id: nanoid(), name, number }],
+    }));
+    toast.success('Contact successfully added!');
   };
 
   deleteContact = id => {
@@ -43,8 +43,18 @@ export class App extends Component {
     toast.success('Contact was deleted!');
   };
 
+  filterContacts = evt => {
+    this.setState({ filter: evt.target.value });
+  };
+ 
+
   render() {
     const { contacts, filter } = this.state;
+
+    let visibleContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  
     return (
       <>
         <Toaster />
@@ -52,8 +62,11 @@ export class App extends Component {
         <ContactForm onSubmit={this.addContact} />
 
         <Title title={TITLES.contacts} />
-        <Filter filter={filter} />
-        <ContactsList contacts={contacts} onDelete={this.deleteContact} />
+        <Filter filter={filter} onFilterInput={this.filterContacts} />
+        <ContactsList
+          contacts={visibleContacts}
+          onDelete={this.deleteContact}
+        />
       </>
     );
   }
