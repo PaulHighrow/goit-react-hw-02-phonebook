@@ -26,7 +26,20 @@ const TITLES = {
 export class App extends Component {
   state = { ...INITIAL_STATE };
 
-  addContact = (name, number) => {
+  // Ванільна версія
+  // addContact = (name, number) => {
+  //     if (this.state.contacts.find(contact => contact.name === name)) {
+  //       toast.error(`Sorry, ${name} is already in contacts.`);
+  //       return;
+  //     }
+  //     this.setState(prevState => ({
+  //       contacts: [...prevState.contacts, { id: nanoid(), name, number }],
+  //     }));
+  //     toast.success('Contact successfully added!');
+  //   };
+
+  // Formik-версія
+  addContact = ({ name, number }) => {
     if (this.state.contacts.find(contact => contact.name === name)) {
       toast.error(`Sorry, ${name} is already in contacts.`);
       return;
