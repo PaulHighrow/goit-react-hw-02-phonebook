@@ -1,9 +1,11 @@
 import { Component } from 'react';
 import { Title } from './Title/Title';
-import { Form } from './Form/Form';
-import { Contacts } from './Contacts/Contacts';
+import { ContactForm } from './ContactForm/ContactForm';
+import { Filter } from './Filter/Filter';
+import { ContactsList } from './ContactsList/ContactsList';
 
 import { nanoid } from 'nanoid';
+import toast, { Toaster } from 'react-hot-toast';
 
 const INITIAL_STATE = {
   contacts: [
@@ -13,8 +15,6 @@ const INITIAL_STATE = {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ],
   filter: '',
-  name: '',
-  number: '',
 };
 
 const TITLES = {
@@ -26,29 +26,34 @@ export class App extends Component {
   state = { ...INITIAL_STATE };
 
   addContact = (name, number) => {
+    if (this.state.contacts.find(contact => contact.name === name)) {
+      toast.error(`Sorry, ${name} is already in contacts.`);
+      return;
+    }
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, { id: nanoid(), name, number }],
-    }));
-    this.reset();
+        contacts: [...prevState.contacts, { id: nanoid(), name, number }],
+      }));
+      toast.success('Contact successfully added!');
   };
 
-  deleteContact = (id) => { 
-
-  }
-
-  reset = () => { 
-  
-  }
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+    toast.success('Contact was deleted!');
+  };
 
   render() {
-    const { contacts, name, number, filter } = this.state;
+    const { contacts, filter } = this.state;
     return (
       <>
+        <Toaster />
         <Title title={TITLES.form} />
-        <Form name={name} number={number} onSubmit={this.addContact} />
+        <ContactForm onSubmit={this.addContact} />
 
         <Title title={TITLES.contacts} />
-        <Contacts contacts={contacts} filter={filter} />
+        <Filter filter={filter} />
+        <ContactsList contacts={contacts} onDelete={this.deleteContact} />
       </>
     );
   }

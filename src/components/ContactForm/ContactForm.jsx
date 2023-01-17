@@ -1,4 +1,4 @@
-export const Form = ({ name, number, onSubmit }) => {
+export const ContactForm = ({ name, number, onSubmit }) => {
 
   const handleSubmit = evt => { 
     evt.preventDefault();
